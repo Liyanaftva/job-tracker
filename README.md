@@ -27,7 +27,6 @@ A full-stack AI-powered job application tracker that helps you manage every job 
 | Backend | FastAPI (Python) |
 | Database | PostgreSQL + SQLAlchemy |
 | AI | Groq API (Llama 3) |
-| Auth | JWT (coming soon) |
 
 ---
 
