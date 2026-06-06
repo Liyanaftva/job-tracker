@@ -12,8 +12,8 @@ def create_job(job: JobCreate, db: Session = Depends(get_db)):
     return job_service.create_job(db, job)
 
 @router.get("/", response_model=List[JobResponse])
-def get_all_jobs(db: Session = Depends(get_db)):
-    return job_service.get_all_jobs(db)
+def get_all_jobs(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    return job_service.get_all_jobs(db, skip, limit)
 
 @router.get("/{job_id}", response_model=JobResponse)
 def get_job(job_id: int, db: Session = Depends(get_db)):
