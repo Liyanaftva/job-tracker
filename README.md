@@ -44,6 +44,33 @@ Groq AI
 
 ---
 
+## 🔁 Request Flow
+
+Every request follows this exact path:
+
+```
+FRONTEND    →  sends "POST /jobs" with job data
+ENDPOINT    →  the URL that receives it (/jobs)
+ROUTER      →  sees it came in, sends it to the right service
+SERVICE     →  saves to database, calls Groq, returns result
+ROUTER      →  takes the result, sends it back as response
+FRONTEND    →  receives it and shows it on screen
+```
+
+---
+
+## 🛣️ API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/jobs` | Create a new job |
+| GET | `/jobs` | Get all jobs |
+| GET | `/jobs/{id}` | Get one job by ID |
+| PATCH | `/jobs/{id}` | Update job status or notes |
+| DELETE | `/jobs/{id}` | Delete a job |
+
+---
+
 ## 📁 Project Structure
 
 ```
@@ -115,7 +142,7 @@ Tables are created automatically when you run the server.
 ## 📌 Roadmap
 
 - [x] Phase 1 — Project setup + database design
-- [ ] Phase 2 — FastAPI CRUD endpoints
+- [x] Phase 2 — FastAPI CRUD endpoints
 - [ ] Phase 3 — Groq AI integration
 - [ ] Phase 4 — React frontend
 - [ ] Phase 5 — Connect everything + polish
@@ -126,5 +153,4 @@ Tables are created automatically when you run the server.
 
 **Liyana Fathima Thasneem V A**  
 Full Stack Developer  
-[LinkedIn](https://linkedin.com/in/liyanafathimathasneemva) 
-[GitHub](https://github.com/Liyanaftva)
+[LinkedIn](https://linkedin.com/in/liyanafathimathasneemva) · [GitHub](https://github.com/Liyanaftva)
