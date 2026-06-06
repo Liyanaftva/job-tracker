@@ -44,5 +44,8 @@ Example format:
     )
 
     raw = response.choices[0].message.content
-    result = json.loads(raw)
-    return result
+    try:
+        result = json.loads(raw)
+        return result
+    except json.JSONDecodeError as e:
+        raise ValueError(f"Groq returned invalid JSON: {e}\nRaw: {raw}")
