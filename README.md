@@ -44,6 +44,23 @@ Groq AI
 
 ---
 
+## 🤖 How Groq AI Works
+
+```
+You paste a job description
+        ↓
+Your backend sends it to Groq with a prompt
+"Here is a job description. Extract the required skills..."
+        ↓
+Groq's Llama 3 model reads it and responds
+        ↓
+Your backend saves the response to the database
+        ↓
+Those null fields are now filled ✅
+```
+
+---
+
 ## 🔁 Request Flow
 
 Every request follows this exact path:
@@ -75,15 +92,27 @@ FRONTEND    →  receives it and shows it on screen
 
 ```
 job-tracker/
+├── README.md
+├── .gitignore
 ├── backend/
+│   ├── requirements.txt
 │   └── app/
-│       ├── main.py        ← 🚪 Front door. Starts the app, registers all routes
-│       ├── database.py    ← 🔌 Database connection setup. One file, used everywhere
-│       ├── models/        ← 🗄️  What your DATABASE tables look like
-│       ├── schemas/       ← 📋 What your API requests/responses look like
-│       ├── routers/       ← 🛣️  URL endpoints. Decides WHAT happens at each route
-│       └── services/      ← 🧠 Business logic. DB queries + AI calls
-└── frontend/              ← React app (coming soon)
+│       ├── main.py              ← 🚪 Front door. Starts the app, registers all routes
+│       ├── database.py          ← 🔌 Database connection setup. One file, used everywhere
+│       ├── models/
+│       │   ├── __init__.py
+│       │   └── job.py           ← 🗄️  What your DATABASE tables look like
+│       ├── schemas/
+│       │   ├── __init__.py
+│       │   └── job.py           ← 📋 What your API requests/responses look like
+│       ├── routers/
+│       │   ├── __init__.py
+│       │   └── jobs.py          ← 🛣️  URL endpoints. Decides WHAT happens at each route
+│       └── services/
+│           ├── __init__.py
+│           ├── job_service.py   ← 🧠 DB queries for jobs
+│           └── ai_service.py    ← 🤖 Groq AI calls
+└── frontend/                    ← ⚛️  React app (coming soon)
 ```
 
 ---
@@ -143,7 +172,7 @@ Tables are created automatically when you run the server.
 
 - [x] Phase 1 — Project setup + database design
 - [x] Phase 2 — FastAPI CRUD endpoints
-- [ ] Phase 3 — Groq AI integration
+- [x] Phase 3 — Groq AI integration
 - [ ] Phase 4 — React frontend
 - [ ] Phase 5 — Connect everything + polish
 

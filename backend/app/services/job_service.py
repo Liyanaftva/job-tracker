@@ -1,8 +1,10 @@
 from sqlalchemy.orm import Session
 from app.models.job import Job
 from app.schemas.job import JobCreate, JobUpdate
+from app.services.ai_service import analyze_job_description
 
 def create_job(db: Session, job_data: JobCreate):
+    # Step 1: Save the job to database first
     new_job = Job(
         title=job_data.title,
         company=job_data.company,
@@ -13,6 +15,24 @@ def create_job(db: Session, job_data: JobCreate):
     db.add(new_job)
     db.commit()
     db.refresh(new_job)
+
+    # Step 2: Send the job description to Groq AI
+    try:
+        ai_result = analyze_job_description(job_data.job_description)
+
+        # Step 3: Save Groq's response back to the same job
+        new_job.jd_summary = ai_result.get("jd_summary")
+        new_job.required_skills = ai_result.get("required_skills")
+        new_job.skill_gaps = ai_result.get("skill_gaps")
+        new_job.resume_suggestions = ai_result.get("resume_suggestions")
+
+        db.commit()
+        db.refresh(new_job)
+
+    except Exception as e:
+        # If Groq fails, still return the job — just without AI fields
+        print(f"Groq AI error: {e}")
+
     return new_job
 
 def get_all_jobs(db: Session, skip: int = 0, limit: int = 100):
