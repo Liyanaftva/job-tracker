@@ -19,7 +19,7 @@ class Job(Base):
     applied_date = Column(DateTime, server_default=func.now())
     notes = Column(Text, nullable=True)
     
-    # AI-generated fields (filled by Claude)
+    # AI-generated fields (filled by Groq)
     jd_summary = Column(Text, nullable=True)
     required_skills = Column(ARRAY(String), nullable=True)   # extracted from JD
     skill_gaps = Column(ARRAY(String), nullable=True)        # missing from your resume
